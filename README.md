@@ -42,10 +42,6 @@ This package does the watermark-specific work before the model:
 npm install browser-watermark-removal onnxruntime-web
 ```
 
-> The source and demo are ready; the first npm publication and GitHub Pages
-deployment happen when the repository is pushed. Until then, run the demo with
-`npm install && npm run dev` from a clone.
-
 ```ts
 import {
   configureCore,
@@ -54,9 +50,9 @@ import {
 } from 'browser-watermark-removal';
 
 configureCore({
-  // Host the models yourself, or use the ClearPix demo origin.
-  modelBase: 'https://static.clearpix.org',
-  ortWasmPaths: 'https://static.clearpix.org/ort/1.30.0/',
+  // Models default to ./models on your origin; set modelBase to your CDN.
+  modelBase: '',
+  ortWasmPaths: 'https://registry.npmmirror.com/onnxruntime-web/1.30.0/files/dist/',
 });
 
 const image = await toImageData(fileOrUrlOrBlob);
@@ -81,9 +77,12 @@ const blob = await toBlob(result.image);
 | `models/lama_fp16.onnx` | 107.8 MB | LaMa HQ path |
 | `models/lama_fp32.onnx` | 208 MB | LaMa fallback |
 | `models/yolo11_watermark_det.onnx` | 11 MB | optional YOLO |
-| `ort/1.30.0/*` | — | ONNX Runtime wasm binaries |
 
-The demo uses `https://static.clearpix.org` so the GitHub Pages build does not ship hundreds of MB of weights. You can copy the files to your own CDN; keep the same names.
+The example loads ONNX Runtime's wasm binaries from npmmirror, a public npm CDN that is reachable from mainland China. Self-host them if you need a fully self-contained deploy.
+
+The LaMa fp16 weights were produced with [`onnx-fp16-guard`](https://github.com/SharksevenRo/onnx-fp16-guard), a safe fp16 converter that rescales overflowing BatchNorm statistics instead of silently clamping them. Use it when you quantize your own ONNX models to 16-bit.
+
+The hosted demo serves model weights from `https://static.clearpix.org` so the GitHub Pages build does not ship hundreds of MB of weights. You can copy the files to your own CDN; keep the same names.
 
 ## API
 

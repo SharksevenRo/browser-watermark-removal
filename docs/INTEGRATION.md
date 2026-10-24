@@ -10,8 +10,8 @@ integration should be an adapter, not a rewrite.
 import { configureCore, removeWatermark, toImageData } from 'browser-watermark-removal';
 
 configureCore({
-  modelBase: import.meta.env.VITE_STATIC_ORIGIN, // e.g. https://static.clearpix.org
-  ortWasmPaths: `${import.meta.env.VITE_STATIC_ORIGIN}/ort/1.30.0/`,
+  modelBase: import.meta.env.VITE_STATIC_ORIGIN, // ClearPix model origin
+  ortWasmPaths: 'https://registry.npmmirror.com/onnxruntime-web/1.30.0/files/dist/',
   cacheName: 'clearpix-models',
 });
 

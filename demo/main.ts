@@ -9,8 +9,9 @@ import {
 
 const params = new URLSearchParams(location.search);
 configureCore({
+  // Demo-only model host; the package itself defaults to ./models.
   modelBase: 'https://static.clearpix.org',
-  ortWasmPaths: 'https://static.clearpix.org/ort/1.30.0/',
+  ortWasmPaths: 'https://registry.npmmirror.com/onnxruntime-web/1.30.0/files/dist/',
   cacheName: 'browser-watermark-removal-demo',
   // `?ep=wasm` is useful for headless benchmarks and for GPUs with broken
   // WebGPU drivers. The default chain stays WebGPU → WASM.
