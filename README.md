@@ -236,15 +236,6 @@ npm run build:demo # static demo → demo/dist/
 
 The demo is plain TypeScript + Vite. No React, no framework. The library build is `tsup` ESM + `.d.ts`; `onnxruntime-web` stays external and is loaded dynamically.
 
-### Deploy the demo
-
-The workflow in [`.github/workflows/pages.yml`](.github/workflows/pages.yml) builds `demo/dist` and deploys it to GitHub Pages on every push to `main`.
-
-1. Create `SharksevenRo/browser-watermark-removal` on GitHub.
-2. Push this repository.
-3. Settings → Pages → Build and deployment → **GitHub Actions**.
-4. The demo will be at `https://sharksevenro.github.io/browser-watermark-removal/`.
-
 ## Model licenses
 
 The library code is MIT. Model weights are **not** bundled and keep their own licenses:
