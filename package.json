@@ -1,0 +1,67 @@
+{
+  "name": "browser-watermark-removal",
+  "version": "0.1.0",
+  "description": "Headless, 100% in-browser watermark removal core: auto-detect, glyph-level masks, MI-GAN / LaMa inpainting, WebGPU + WASM.",
+  "type": "module",
+  "license": "MIT",
+  "author": "SharksevenRo",
+  "homepage": "https://sharksevenro.github.io/browser-watermark-removal/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SharksevenRo/browser-watermark-removal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SharksevenRo/browser-watermark-removal/issues"
+  },
+  "keywords": [
+    "watermark-removal",
+    "watermark-remover",
+    "image-inpainting",
+    "inpainting",
+    "onnx",
+    "onnxruntime-web",
+    "webgpu",
+    "wasm",
+    "browser",
+    "image-processing",
+    "migan",
+    "lama",
+    "ppocr"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "dev": "vite --config vite.demo.config.ts",
+    "build": "tsup",
+    "build:demo": "vite build --config vite.demo.config.ts",
+    "preview": "vite preview --config vite.demo.config.ts",
+    "bench": "node scripts/bench.mjs",
+    "bench:gpu": "node scripts/bench.mjs --gpu",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run build"
+  },
+  "peerDependencies": {
+    "onnxruntime-web": "^1.30.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "onnxruntime-web": "^1.30.0",
+    "playwright": "^1.64.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.4"
+  }
+}
