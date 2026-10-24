@@ -42,6 +42,10 @@ This package does the watermark-specific work before the model:
 npm install browser-watermark-removal onnxruntime-web
 ```
 
+> The source and demo are ready; the first npm publication and GitHub Pages
+deployment happen when the repository is pushed. Until then, run the demo with
+`npm install && npm run dev` from a clone.
+
 ```ts
 import {
   configureCore,
