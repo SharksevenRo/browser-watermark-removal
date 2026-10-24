@@ -1,6 +1,6 @@
 {
   "name": "browser-watermark-removal",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Headless, 100% in-browser watermark removal core: auto-detect, glyph-level masks, MI-GAN / LaMa inpainting, WebGPU + WASM.",
   "type": "module",
   "license": "MIT",

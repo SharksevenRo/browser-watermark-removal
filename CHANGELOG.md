@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 — 2026-10-24
+
+- First public npm release. `0.1.0` was blocked by an npm registry
+  staged-publish conflict before it went live.
+
 ## 0.1.0 — 2026-10-24
 
 - Extracted the ClearPix browser watermark pipeline into a standalone,
