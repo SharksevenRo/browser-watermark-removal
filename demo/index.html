@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Open-source, headless watermark removal in the browser. Auto-detection, glyph-level masks, MI-GAN / LaMa inpainting, WebGPU + WASM. No upload, no UI required."
+    />
+    <meta name="theme-color" content="#0b0d10" />
+    <meta property="og:title" content="browser-watermark-removal — headless in-browser watermark removal" />
+    <meta
+      property="og:description"
+      content="Detect, mask and inpaint watermarks 100% on-device. MIT-licensed core, benchmarked, built for ClearPix and any web app."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sharksevenro.github.io/browser-watermark-removal/" />
+    <meta property="og:image" content="https://sharksevenro.github.io/browser-watermark-removal/assets/hero.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://sharksevenro.github.io/browser-watermark-removal/" />
+    <title>browser-watermark-removal — headless in-browser watermark removal</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "browser-watermark-removal",
+        "description": "Headless, 100% in-browser watermark removal core with auto-detection, glyph-level masks, MI-GAN / LaMa inpainting, WebGPU and WASM.",
+        "codeRepository": "https://github.com/SharksevenRo/browser-watermark-removal",
+        "url": "https://sharksevenro.github.io/browser-watermark-removal/",
+        "license": "https://opensource.org/licenses/MIT",
+        "programmingLanguage": "TypeScript",
+        "author": { "@type": "Organization", "name": "SharksevenRo" }
+      }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0d10'/%3E%3Cpath d='M18 40c8-16 20-16 28 0' stroke='%23b8ff5a' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='24' r='5' fill='%235eead4'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://static.clearpix.org" crossorigin />
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./main.ts"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="browser-watermark-removal home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="26" height="26"><path d="M5 22c4.5-9 17.5-9 22 0" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="16" cy="11" r="3.2" fill="currentColor"/></svg>
+        </span>
+        <span class="brand-name">browser<span>-watermark-removal</span></span>
+        <span class="badge">MIT</span>
+      </a>
+      <nav class="site-nav">
+        <a href="#playground">Playground</a>
+        <a href="#benchmark">Benchmark</a>
+        <a href="#cases">Cases</a>
+        <a href="https://github.com/SharksevenRo/browser-watermark-removal" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a class="nav-cta" href="https://clearpix.org" target="_blank" rel="noreferrer">Try ClearPix ↗</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="kicker"><span class="dot"></span> Open source · 100% on-device · WebGPU + WASM</p>
+          <h1>Remove watermarks<br /><span class="grad">in the browser.</span></h1>
+          <p class="lede">
+            A headless core for watermark detection, glyph-level masking and
+            inpainting. No upload, no backend, no UI required. Drop it into a
+            canvas app, a worker, or your own editor.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#playground">Run the live demo</a>
+            <a class="button ghost" href="https://github.com/SharksevenRo/browser-watermark-removal" target="_blank" rel="noreferrer">Read the source ↗</a>
+          </div>
+          <dl class="hero-stats">
+            <div><dt>23.8 dB</dt><dd>best PSNR gain</dd></div>
+            <div><dt>0.56 s</dt><dd>fastest case*</dd></div>
+            <div><dt>0 B</dt><dd>uploaded</dd></div>
+            <div><dt>MIT</dt><dd>core license</dd></div>
+          </dl>
+          <p class="hero-note hero-note-left">*Apple M4, WebGPU, 800×500. First run downloads the models once.</p>
+        </div>
+        <div class="hero-side">
+          <div class="code-card" aria-label="API example">
+            <div class="code-head">
+              <span class="code-dots"><i></i><i></i><i></i></span>
+              <span>quickstart.ts</span>
+              <span class="code-tag">ESM</span>
+            </div>
+            <pre><code><span class="c-key">import</span> { removeWatermark } <span class="c-key">from</span>
+  <span class="c-str">'browser-watermark-removal'</span>;
+
+<span class="c-com">// ImageData in, ImageData out.</span>
+<span class="c-key">const</span> result = <span class="c-key">await</span> removeWatermark(image, {
+  quality: <span class="c-str">'balanced'</span>, <span class="c-com">// fast | balanced | hq</span>
+});
+
+result.image;   <span class="c-com">// clean pixels</span>
+result.mask;    <span class="c-com">// what was removed</span>
+result.timings; <span class="c-com">// detect / mask / inpaint</span></code></pre>
+            <div class="code-foot">
+              <span>ONNX Runtime Web</span>
+              <span>MI-GAN · LaMa</span>
+              <span>WebGPU → WASM fallback</span>
+            </div>
+          </div>
+          <p class="hero-note">
+            Built by the team behind
+            <a href="https://clearpix.org" target="_blank" rel="noreferrer">ClearPix</a>
+            — the production watermark remover and upscaler.
+          </p>
+        </div>
+      </section>
+
+      <section id="playground" class="section panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Live playground</p>
+            <h2>Try the actual package</h2>
+          </div>
+          <p class="section-note">Models download once, then stay in IndexedDB. The first run is the slow one.</p>
+        </div>
+
+        <div class="workbench">
+          <aside class="controls">
+            <label class="field">
+              <span>Sample case</span>
+              <select id="sample">
+                <option value="text-br-large">Large white text · bottom-right</option>
+                <option value="text-tr-faint">Faint white text · top-right</option>
+                <option value="halo-flat-text">Halo text on flat sky</option>
+                <option value="tiled-med">Repeating tile overlay</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Quality preset</span>
+              <select id="quality">
+                <option value="fast">Fast · classical fill when safe</option>
+                <option value="balanced" selected>Balanced · MI-GAN</option>
+                <option value="hq">HQ · LaMa (large download)</option>
+              </select>
+            </label>
+
+            <label class="check">
+              <input id="useYolo" type="checkbox" />
+              <span>YOLO second opinion <small>+11 MB</small></span>
+            </label>
+            <label class="check">
+              <input id="showMask" type="checkbox" />
+              <span>Show detection mask</span>
+            </label>
+
+            <div class="control-actions">
+              <button id="run" class="button primary" type="button">Remove watermark</button>
+              <button id="download" class="button ghost" type="button" disabled>Download PNG</button>
+            </div>
+
+            <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
+            <p id="status" class="status" role="status">Pick a sample or drop an image.</p>
+
+            <label id="drop" class="drop">
+              <input id="file" type="file" accept="image/*" hidden />
+              <strong>Drop an image</strong>
+              <span>or click to choose · stays on your device</span>
+            </label>
+          </aside>
+
+          <div class="stage">
+            <div class="stage-bar">
+              <div>
+                <span id="stageTitle">text-br-large</span>
+                <span id="stageMeta" class="stage-meta">800 × 500</span>
+              </div>
+              <span class="stage-chip">on-device</span>
+            </div>
+            <div class="canvas-wrap" id="canvasWrap">
+              <canvas id="canvas" width="800" height="500"></canvas>
+              <div class="compare-labels" id="compareLabels" hidden>
+                <span>Original</span><span>Removed</span>
+              </div>
+              <div class="compare" id="compare" hidden>
+                <input id="slider" type="range" min="0" max="100" value="50" aria-label="Before / after slider" />
+              </div>
+              <div class="empty" id="empty">
+                <span class="empty-icon">⌁</span>
+                <span>Load a sample to start</span>
+              </div>
+            </div>
+            <div class="timings" id="timings">
+              <div><span>Detect</span><strong>—</strong></div>
+              <div><span>Mask</span><strong>—</strong></div>
+              <div><span>Model init</span><strong>—</strong></div>
+              <div><span>Inpaint</span><strong>—</strong></div>
+              <div><span>Total</span><strong>—</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="benchmark" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Benchmark</p>
+            <h2>Real timings, not marketing numbers</h2>
+          </div>
+          <p class="section-note">Measured by <code>npm run bench</code> in Chromium. Your GPU and network will differ.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="bench-table">
+            <thead>
+              <tr>
+                <th>Case</th>
+                <th>Engine</th>
+                <th>Detect</th>
+                <th>Mask</th>
+                <th>Inpaint</th>
+                <th>Region PSNR in</th>
+                <th>Region PSNR out</th>
+                <th>Gain</th>
+              </tr>
+            </thead>
+            <tbody id="benchBody">
+              <tr><td colspan="8" class="muted">Run <code>npm run bench</code> to generate results.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="footnote">
+          PSNR is computed against the clean reference for each synthetic case. Higher is better.
+          The 12-case suite used by ClearPix is broader; see the README for the full numbers and methodology.
+        </p>
+      </section>
+
+      <section id="cases" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Cases</p>
+            <h2>Before / after, on the same pixels</h2>
+          </div>
+          <p class="section-note">Synthetic watermarks with a known clean reference. No cherry-picked stock photos.</p>
+        </div>
+        <div class="case-grid" id="caseGrid"></div>
+      </section>
+
+      <section class="section comparison">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Compared with inpaint-web</p>
+            <h2>Same browser inpainting idea. Different job.</h2>
+          </div>
+        </div>
+        <div class="compare-grid">
+          <article class="compare-card">
+            <h3>inpaint-web</h3>
+            <p class="muted">The project that proved browser inpainting works. Great manual-mask editor and a strong reference for WebGPU + WASM.</p>
+            <ul>
+              <li>Manual mask / brush UI</li>
+              <li>Inpainting-first workflow</li>
+              <li>You decide where the watermark is</li>
+            </ul>
+          </article>
+          <article class="compare-card accent">
+            <h3>browser-watermark-removal</h3>
+            <p class="muted">A headless watermark pipeline: detection, glyph-level mask, then inpainting. Built to be embedded.</p>
+            <ul>
+              <li>Auto text / light / dark detection</li>
+              <li>Glyph masks + shape refinement</li>
+              <li>Fast-fill → MI-GAN → LaMa routing</li>
+              <li>Framework-free API + timings</li>
+            </ul>
+          </article>
+        </div>
+        <p class="footnote">
+          We do not claim a model-level win over inpaint-web. The difference is the watermark-specific
+          pipeline around the model — and the fact that this is a library, not an editor.
+          <a href="https://github.com/lxfater/inpaint-web" target="_blank" rel="noreferrer">See inpaint-web ↗</a>
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>browser-watermark-removal</strong>
+        <span>MIT · models keep their own licenses</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://clearpix.org" target="_blank" rel="noreferrer">ClearPix — watermark remover &amp; upscaler ↗</a>
+        <a href="https://github.com/SharksevenRo/browser-watermark-removal" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </footer>
+  </body>
+</html>
